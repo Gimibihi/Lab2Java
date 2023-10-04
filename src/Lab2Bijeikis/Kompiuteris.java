@@ -1,12 +1,11 @@
 package Lab2Bijeikis;
 
+import Laboras2demo.Automobilis;
 import studijosKTU.KTUable;
 import studijosKTU.Ks;
+import studijosKTU.ListKTU;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Kompiuteris implements KTUable<Kompiuteris> {
     private String procesoriausGamintojas;
@@ -18,6 +17,10 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
 
     public void setKaina(double kaina) {
         this.kaina = kaina;
+    }
+
+    public String getProcesoriausGamintojas() {
+        return procesoriausGamintojas;
     }
 
     public Kompiuteris(){}
@@ -66,5 +69,47 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
         } catch (NoSuchElementException e) {
             Ks.ern("Trūksta duomenų apie kompiuterį -> " + dataString);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Kompiuteris{" +
+                "procesoriausGamintojas='" + procesoriausGamintojas + '\'' +
+                ", procesoriausModelis='" + procesoriausModelis + '\'' +
+                ", ramuKiekis=" + ramuKiekis +
+                ", kietojoDiskoVieta=" + kietojoDiskoVieta +
+                ", nasumas=" + nasumas +
+                ", kaina=" + kaina +
+                '}';
+    }
+
+    public final static Comparator<Kompiuteris> pagalGamintoja = new Comparator <Kompiuteris>(){
+        public int compare(Kompiuteris komp1, Kompiuteris komp2) {
+            int cmp = komp1.getProcesoriausGamintojas().compareTo(komp2.getProcesoriausGamintojas());
+            return cmp;
+        }
+    } ;
+
+    public static void main(String[] args) {
+        Kompiuteris komp1 = new Kompiuteris("Intel", "i7",16,256,12508,1549);
+        Kompiuteris komp2 = new Kompiuteris("Intel", "i5",8,512,8508,899);
+        Kompiuteris komp3 = new Kompiuteris("AMD", "Ryzen 5",32,1064,13570,1299);
+        Kompiuteris komp4 = new Kompiuteris("Intel", "Xeon",256,8320,19000,5499);
+        Kompiuteris komp5 = new Kompiuteris("AMD", "Ryzen 7",64,1064,14508,1349);
+        Kompiuteris komp6 = new Kompiuteris("AMD", "Threadripper",128,8320,16508,3849);
+        ListKTU kompiuteriai = new ListKTU();
+        kompiuteriai.add(komp1);
+        kompiuteriai.add(komp2);
+        kompiuteriai.add(komp3);
+        kompiuteriai.add(komp4);
+        kompiuteriai.add(komp5);
+        kompiuteriai.add(komp6);
+        kompiuteriai.sortBuble(pagalGamintoja);
+        System.out.println(kompiuteriai.get(0).toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
     }
 }
