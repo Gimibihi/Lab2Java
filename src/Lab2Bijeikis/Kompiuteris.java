@@ -23,6 +23,18 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
         return procesoriausGamintojas;
     }
 
+    public String getProcesoriausModelis() {
+        return procesoriausModelis;
+    }
+
+    public int getNasumas() {
+        return nasumas;
+    }
+
+    public int getRamuKiekis() {
+        return ramuKiekis;
+    }
+
     public Kompiuteris(){}
     public Kompiuteris(String procesoriausGamintojas,String procesoriausModelis, int ramuKiekis,
                        int kietojoDiskoVieta, int nasumas, double kaina){
@@ -90,6 +102,24 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
         }
     } ;
 
+    public final static Comparator<Kompiuteris> pagalModeli = new Comparator <Kompiuteris>(){
+        public int compare(Kompiuteris komp1, Kompiuteris komp2) {
+            int cmp = komp1.getProcesoriausModelis().compareTo(komp2.getProcesoriausModelis());
+            return cmp;
+        }
+    } ;
+
+    public final static Comparator<Kompiuteris> pagalNasuma = new Comparator <Kompiuteris>(){
+        public int compare(Kompiuteris komp1, Kompiuteris komp2) {
+            int cmp = -1;
+            if(komp1.getNasumas() > komp2.getNasumas())
+                cmp = 1;
+            else if(komp1.getNasumas() == komp2.getNasumas())
+                cmp = 0;
+            return cmp;
+        }
+    } ;
+
     public static void main(String[] args) {
         Kompiuteris komp1 = new Kompiuteris("Intel", "i7",16,256,12508,1549);
         Kompiuteris komp2 = new Kompiuteris("Intel", "i5",8,512,8508,899);
@@ -105,6 +135,23 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
         kompiuteriai.add(komp5);
         kompiuteriai.add(komp6);
         kompiuteriai.sortBuble(pagalGamintoja);
+        System.out.println("Rikiavimas Pagal Gamintoja\n");
+        System.out.println(kompiuteriai.get(0).toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        kompiuteriai.sortBuble(pagalModeli);
+        System.out.println("\nRikiavimas Pagal Modeli\n");
+        System.out.println(kompiuteriai.get(0).toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        System.out.println(kompiuteriai.getNext().toString());
+        kompiuteriai.sortBuble(pagalNasuma);
+        System.out.println("\nRikiavimas Pagal Nasuma\n");
         System.out.println(kompiuteriai.get(0).toString());
         System.out.println(kompiuteriai.getNext().toString());
         System.out.println(kompiuteriai.getNext().toString());
