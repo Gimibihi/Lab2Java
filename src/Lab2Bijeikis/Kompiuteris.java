@@ -10,10 +10,14 @@ import java.util.*;
 public class Kompiuteris implements KTUable<Kompiuteris> {
     private String procesoriausGamintojas;
     private String procesoriausModelis;
-    private int ramuKiekis;
-    private int kietojoDiskoVieta;
+    private String ramuKiekis;
+    private String kietojoDiskoVieta;
     private int nasumas;
     private double kaina;
+
+    public double getKaina() {
+        return kaina;
+    }
 
     public void setKaina(double kaina) {
         this.kaina = kaina;
@@ -31,13 +35,13 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
         return nasumas;
     }
 
-    public int getRamuKiekis() {
+    public String getRamuKiekis() {
         return ramuKiekis;
     }
 
     public Kompiuteris(){}
-    public Kompiuteris(String procesoriausGamintojas,String procesoriausModelis, int ramuKiekis,
-                       int kietojoDiskoVieta, int nasumas, double kaina){
+    public Kompiuteris(String procesoriausGamintojas,String procesoriausModelis, String ramuKiekis,
+                       String kietojoDiskoVieta, int nasumas, double kaina){
         this.procesoriausGamintojas = procesoriausGamintojas;
         this.procesoriausModelis = procesoriausModelis;
         this.ramuKiekis = ramuKiekis;
@@ -62,20 +66,22 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
     public int compareTo(Kompiuteris o) {
         return 0;
     }
-
     public final void parse(String dataString) {
         try {
-            Scanner ed = new Scanner(dataString);
-            ed.useDelimiter(";");
-            // numatytieji skirtukai: tarpas, tab, eilutės pabaiga
-            // Skiriklius galima pakeisti Scanner klasės metodu useDelimitersr
-            //	Pavyzdžiui, ed.useDelimiter(", *"); reikštų, kad skiriklis bus kablelis ir vienas ar daugiau tarpų.
-            procesoriausGamintojas = ed.next();
-            procesoriausModelis = ed.next();
-            ramuKiekis = ed.nextInt();
-            kietojoDiskoVieta = ed.nextInt();
-            nasumas = ed.nextInt();
-            setKaina(ed.nextDouble());
+            String[] data = dataString.split(";");
+            procesoriausGamintojas = data[0];
+            procesoriausModelis = data[1];
+            ramuKiekis = data[2];
+            kietojoDiskoVieta = data[3];
+            nasumas = Integer.parseInt(data[4]);
+            try {
+                setKaina(Double.parseDouble(data[5]));
+            }
+                catch(NumberFormatException e){
+                String line = data[5].replace(',','.');
+                setKaina(Double.parseDouble(line));
+                }
+
         } catch (InputMismatchException e) {
             Ks.ern("Blogas duomenų formatas apie kompiuterį -> " + dataString);
         } catch (NoSuchElementException e) {
@@ -85,14 +91,9 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
 
     @Override
     public String toString() {
-        return "Kompiuteris{" +
-                "procesoriausGamintojas='" + procesoriausGamintojas + '\'' +
-                ", procesoriausModelis='" + procesoriausModelis + '\'' +
-                ", ramuKiekis=" + ramuKiekis +
-                ", kietojoDiskoVieta=" + kietojoDiskoVieta +
-                ", nasumas=" + nasumas +
-                ", kaina=" + kaina +
-                '}';
+        return  String.format("| %-23s | %-20s | %11s | %19s | %7d | %7.2f |\n"+
+                        "|--------------------------------------------------------------------------------------------------------|\n",
+                        procesoriausGamintojas,procesoriausModelis,ramuKiekis,kietojoDiskoVieta,nasumas,kaina);
     }
 
     public final static Comparator<Kompiuteris> pagalGamintoja = new Comparator <Kompiuteris>(){
@@ -120,43 +121,15 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
         }
     } ;
 
-    public static void main(String[] args) {
-        Kompiuteris komp1 = new Kompiuteris("Intel", "i7",16,256,12508,1549);
-        Kompiuteris komp2 = new Kompiuteris("Intel", "i5",8,512,8508,899);
-        Kompiuteris komp3 = new Kompiuteris("AMD", "Ryzen 5",32,1064,13570,1299);
-        Kompiuteris komp4 = new Kompiuteris("Intel", "Xeon",256,8320,19000,5499);
-        Kompiuteris komp5 = new Kompiuteris("AMD", "Ryzen 7",64,1064,14508,1349);
-        Kompiuteris komp6 = new Kompiuteris("AMD", "Threadripper",128,8320,16508,3849);
-        ListKTU kompiuteriai = new ListKTU();
-        kompiuteriai.add(komp1);
-        kompiuteriai.add(komp2);
-        kompiuteriai.add(komp3);
-        kompiuteriai.add(komp4);
-        kompiuteriai.add(komp5);
-        kompiuteriai.add(komp6);
-        kompiuteriai.sortBuble(pagalGamintoja);
-        System.out.println("Rikiavimas Pagal Gamintoja\n");
-        System.out.println(kompiuteriai.get(0).toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        kompiuteriai.sortBuble(pagalModeli);
-        System.out.println("\nRikiavimas Pagal Modeli\n");
-        System.out.println(kompiuteriai.get(0).toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        kompiuteriai.sortBuble(pagalNasuma);
-        System.out.println("\nRikiavimas Pagal Nasuma\n");
-        System.out.println(kompiuteriai.get(0).toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-        System.out.println(kompiuteriai.getNext().toString());
-    }
+    public final static Comparator<Kompiuteris> pagalKaina = new Comparator<Kompiuteris>() {
+        @Override
+        public int compare(Kompiuteris komp1, Kompiuteris komp2) {
+            int cmp = -1;
+            if(komp1.getKaina() > komp2.getKaina())
+                cmp = 1;
+            else if(komp1.getKaina() == komp2.getKaina())
+                cmp = 0;
+            return cmp;
+        }
+    };
 }
