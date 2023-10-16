@@ -13,9 +13,11 @@ import java.util.Scanner;
 
 public class Gui extends JFrame {
     private JPanel panelMain;
-    private JTextArea textArea;
+    private JTable table;
+    private JLabel label;
     private JMenuBar meniuBaras;
     private static ListKTU kompiuteriai;
+    private DefaultTableModel tableModel;
     public Gui() {
         initialize();
     }
@@ -25,7 +27,6 @@ public class Gui extends JFrame {
         meniuBaras = new JMenuBar();
         setJMenuBar(meniuBaras);
         Font f = new Font("Courier New", Font.PLAIN, 12);
-        textArea.setFont(f);
         JMenu mFailai = new JMenu("Failai");
         meniuBaras.add(mFailai);
         JMenu mKomp = new JMenu("Kompiuterių apskaita");
@@ -35,6 +36,9 @@ public class Gui extends JFrame {
         miSkaityti.addActionListener(e1 -> readFromFile(e1));
         JMenuItem miBaigti = new JMenuItem("Pabaiga");
         mFailai.add(miBaigti);
+        table.setFont(f);
+        table.setVisible(true);
+
 
         miBaigti.addActionListener((ActionEvent e) -> System.exit(0));
 
@@ -87,20 +91,27 @@ public class Gui extends JFrame {
                 kompiuteriai.add(komp);
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Nepasirinktas joks failas");
         }
         displayText("Pradiniai Duomenys",kompiuteriai);
     }
 
     public void displayText(String antraste, ListKTU kompiuteriai){
-        textArea.append("\n"+antraste+"\n");
-        textArea.append("| Procesoriaus gamintojas | Procesoriaus modelis | Ramu kiekis | Kietojo disko vieta | Nasumas |  Kaina  |\n");
+        label.setText("\n"+antraste+"\n");
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Gamintojas");
+        tableModel.addColumn("Modelis");
+        tableModel.addColumn("Ramų Kiekis");
+        tableModel.addColumn("Disko vieta");
+        tableModel.addColumn("Nasumas");
+        tableModel.addColumn("Kaina");
         if(kompiuteriai.get(0)!=null){
             for(int i=0;i<kompiuteriai.size();i++){
-                textArea.append(kompiuteriai.get(i).toString());
+                tableModel.addRow(((Kompiuteris) kompiuteriai.get(i)).toStringArray());
             }
+            table.setModel(tableModel);
         }
-        else textArea.append("Nėra duomenų");
+        else label.setText("Nėra duomenų");
     }
 
 

@@ -95,6 +95,10 @@ public class Kompiuteris implements KTUable<Kompiuteris> {
                         "|--------------------------------------------------------------------------------------------------------|\n",
                         procesoriausGamintojas,procesoriausModelis,ramuKiekis,kietojoDiskoVieta,nasumas,kaina);
     }
+    public String[] toStringArray(){
+        String[] array = {procesoriausGamintojas,procesoriausModelis,ramuKiekis,kietojoDiskoVieta,Integer.toString(nasumas),Double.toString(kaina)};
+        return array;
+    }
 
     public final static Comparator<Kompiuteris> pagalGamintoja = new Comparator <Kompiuteris>(){
         public int compare(Kompiuteris komp1, Kompiuteris komp2) {
