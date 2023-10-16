@@ -34,6 +34,18 @@ public class Gui extends JFrame {
         JMenuItem miSkaityti = new JMenuItem("Skaityti iš failo...");
         mFailai.add(miSkaityti);
         miSkaityti.addActionListener(e1 -> readFromFile(e1));
+        JMenu mGene = new JMenu("Generuoti");
+        JMenuItem miGene = new JMenuItem("Generuoti");
+        miGene.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int amount = Integer.parseInt(JOptionPane.showInputDialog(panelMain,"","Iveskite kiekį",1));
+                Generator gen = new Generator();
+                gen.Generate(amount);
+            }
+        });
+        mGene.add(miGene);
+        meniuBaras.add(mGene);
         JMenuItem miBaigti = new JMenuItem("Pabaiga");
         mFailai.add(miBaigti);
         table.setFont(f);

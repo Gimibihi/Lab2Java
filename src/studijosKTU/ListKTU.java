@@ -153,16 +153,31 @@ public class ListKTU<E extends Comparable<E>>
 		return a;
 	}
 
+	/**
+	 * Tikrina ar objektas yra sarase
+	 * @param O objektas
+	 * @return logine reiksme
+	 */
 	@Override
 	public boolean Contains(Object O) {
         return indexOf(O) > 0;
     }
 
+	/**
+	 * Tikrina ar objektas yra lygus listo objektui
+	 * @param O objektas
+	 * @return logine reiksme
+	 */
 	@Override
 	public boolean Equals(Object O) {
         return O == this;
     }
 
+	/**
+	 * Metodas kuris pasalina is saraso norima objekta
+	 * @param O objektas
+	 * @return
+	 */
 	@Override
 	public boolean Remove(Object O) {
 		for(int i=0;i<size; i++){
@@ -180,6 +195,11 @@ public class ListKTU<E extends Comparable<E>>
 		return false;
 	}
 
+	/**
+	 * Nustato objekto indexa sarase
+	 * @param O objektas
+	 * @return objekto indexa
+	 */
 	@Override
 	public int indexOf(Object O) {
 		if (O == null) {
@@ -276,6 +296,68 @@ public class ListKTU<E extends Comparable<E>>
 		}
 	}
 
+	/**
+	 * Rikiavimo Metodas
+	 */
+	public void sortInsertion() {
+		if (first == null) {
+			return;
+		}
+
+		Node<E> sorted = null; // Initialize a sorted linked list
+
+		Node<E> current = first; // Traverse the original list
+
+		while (current != null) {
+			Node<E> next = current.next;
+			if (sorted == null || sorted.element.compareTo(current.element) >= 0) {
+				current.next = sorted;
+				sorted = current;
+			} else {
+				Node<E> search = sorted;
+				while (search.next != null && search.next.element.compareTo(current.element) < 0) {
+					search = search.next;
+				}
+				current.next = search.next;
+				search.next = current;
+			}
+			current = next;
+		}
+
+		first = sorted; // Update the head of the linked list
+	}
+
+	/**
+	 * Rikiavimo metodas su komparatoriumi
+	 * @param c komparatorius
+	 */
+	public void sortInsertion(Comparator<E> c) {
+		if (first == null) {
+			return;
+		}
+
+		Node<E> sorted = null; // Initialize a sorted linked list
+
+		Node<E> current = first; // Traverse the original list
+
+		while (current != null) {
+			Node<E> next = current.next;
+			if (sorted == null || c.compare(sorted.element, current.element) >= 0) {
+				current.next = sorted;
+				sorted = current;
+			} else {
+				Node<E> search = sorted;
+				while (search.next != null && c.compare(search.next.element,current.element) < 0) {
+					search = search.next;
+				}
+				current.next = search.next;
+				search.next = current;
+			}
+			current = next;
+		}
+
+		first = sorted; // Update the head of the linked list
+	}
 	/**
 	 * Sukuria iteratoriaus objektą sąrašo elementų peržiūrai
 	 *
