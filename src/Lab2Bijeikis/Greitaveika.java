@@ -8,10 +8,13 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Klasė greitaveikai testuoti
+ */
 public class Greitaveika {
     public static void main(String[] args) {
         Generator gen = new Generator();
-        gen.Generate(20000);
+        gen.Generate(30000);
         ListKTU kompiuteriai = Read();
         long startTime = System.currentTimeMillis();
         Equals(kompiuteriai);
@@ -56,6 +59,11 @@ public class Greitaveika {
         System.out.printf("\nRikiavimo java metodo greitaveika: "+String.valueOf(endTime-startTime));
 
     }
+
+    /**
+     * Metodas equals metodui tikrinti
+     * @param kompiuteriai Duomenų sarasas
+     */
     public static void Equals(ListKTU kompiuteriai){
         Kompiuteris komp = new Kompiuteris("","","","",0,0);
         for(int i=0;i<kompiuteriai.size();i++){
@@ -63,6 +71,11 @@ public class Greitaveika {
             kompiuteriai.Equals(komp);
         }
     }
+
+    /**
+     * Metodas nuskaityti duomenims iš failo
+     * @return Kompiuteriu duomenu sarasa
+     */
     public static ListKTU Read(){
         File file = new File("@..//..//Kompiuteriai.txt");
         ListKTU kompiuteriai = new ListKTU();
@@ -78,6 +91,11 @@ public class Greitaveika {
         }
         return kompiuteriai;
     }
+
+    /**
+     * Metodas tikrinti Remove metodo greitaveika
+     * @param kompiuteriai Duomenų sarasas
+     */
     public static void Remove(ListKTU kompiuteriai){
         Random random = new Random();
         int index;
@@ -86,11 +104,6 @@ public class Greitaveika {
             Kompiuteris komp = (Kompiuteris) kompiuteriai.get(index);
             ListKTU clone = kompiuteriai.clone();
             clone.Remove(komp);
-        }
-    }
-    public static void Print(ListKTU kompiuteriai){
-        for(int i=0;i<kompiuteriai.size();i++){
-            System.out.printf(kompiuteriai.get(i).toString());
         }
     }
 }

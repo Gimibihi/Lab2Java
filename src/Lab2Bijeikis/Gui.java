@@ -4,6 +4,7 @@ import studijosKTU.ListKTU;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Klasė darbui su GUI
+ */
 public class Gui extends JFrame {
     private JPanel panelMain;
     private JTable table;
@@ -18,9 +22,17 @@ public class Gui extends JFrame {
     private JMenuBar meniuBaras;
     private static ListKTU kompiuteriai;
     private DefaultTableModel tableModel;
+
+    /**
+     * Konstruktorius
+     */
     public Gui() {
         initialize();
     }
+
+    /**
+     * Metodas naudojamas sukurti Gui
+     */
     public void initialize(){
         setTitle("Programa");
         setContentPane(panelMain);
@@ -77,6 +89,10 @@ public class Gui extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Metodas vykdyti atranka pagal Gamintoja
+     * @param e1
+     */
     private void atrankaPagalGamintoja(ActionEvent e1) {
         String filter = null;
         filter = JOptionPane.showInputDialog(panelMain,"","Iveskite Gamintoja",1);
@@ -84,6 +100,11 @@ public class Gui extends JFrame {
         ListKTU atrinktiKompiuteriai = atr.procesoriausGamintojas(kompiuteriai,filter);
         displayText("Atrinkti pagal gamintoja "+filter,atrinktiKompiuteriai);
     }
+
+    /**
+     * Metodas vykdyti atranka pagal Modeli
+     * @param e1
+     */
     private void atrankaPagalModeli(ActionEvent e1) {
         String filter = null;
         filter = JOptionPane.showInputDialog(panelMain,"","Iveskite Modeli",1);
@@ -91,6 +112,11 @@ public class Gui extends JFrame {
         ListKTU atrinktiKompiuteriai = atr.procesoriausModelis(kompiuteriai,filter);
         displayText("Atrinkti pagal modeli "+filter,atrinktiKompiuteriai);
     }
+
+    /**
+     * Metodas nuskaityti domenims iš failo
+     * @param e1
+     */
     private void readFromFile(ActionEvent e1) {
         JFileChooser fc = new JFileChooser(".");
         fc.showOpenDialog(panelMain);
@@ -108,6 +134,11 @@ public class Gui extends JFrame {
         displayText("Pradiniai Duomenys",kompiuteriai);
     }
 
+    /**
+     * Metodas spausdinti duomenis į lentele
+     * @param antraste Antraste lenteliai
+     * @param kompiuteriai duomenų klasė
+     */
     public void displayText(String antraste, ListKTU kompiuteriai){
         label.setText("\n"+antraste+"\n");
         tableModel = new DefaultTableModel();

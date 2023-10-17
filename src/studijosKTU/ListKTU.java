@@ -336,9 +336,9 @@ public class ListKTU<E extends Comparable<E>>
 			return;
 		}
 
-		Node<E> sorted = null; // Initialize a sorted linked list
+		Node<E> sorted = null;
 
-		Node<E> current = first; // Traverse the original list
+		Node<E> current = first;
 
 		while (current != null) {
 			Node<E> next = current.next;
@@ -356,7 +356,7 @@ public class ListKTU<E extends Comparable<E>>
 			current = next;
 		}
 
-		first = sorted; // Update the head of the linked list
+		first = sorted;
 	}
 	/**
 	 * Sukuria iteratoriaus objektą sąrašo elementų peržiūrai
@@ -390,6 +390,19 @@ public class ListKTU<E extends Comparable<E>>
 			iterPosition = iterPosition.next;
 			return d;
 		}
+	}
+
+	/**
+	 * Metodas iterpti nauja elemeta i norima vieta ir perstumpti kitus i desine
+	 * @param index vietos indexas
+	 * @param elem elementas
+	 * @return
+	 */
+	public E set(int index, E elem){
+		get(index-1);
+		Node temp = new Node(elem,current.next);
+		current.next=temp;
+		return null;
 	}
 
 	/**
