@@ -41,7 +41,7 @@ public class Atranka {
         ListKTU KompListNew = new ListKTU();
         for(int i=0;i<Kompiuteriai.size();i++){
             element = (Kompiuteris) Kompiuteriai.get(i);
-            if(element.getProcesoriausModelis().compareTo(filtras)==0){
+            if(element.getProcesoriausModelis().toLowerCase().compareTo(filtras)==0){
                 KompListNew.add(element);
             }
         }
